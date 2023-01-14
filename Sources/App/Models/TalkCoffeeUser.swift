@@ -12,6 +12,12 @@ final class TalkCoffeeUser: Model, Content {
 
     @Field(key: "username")
     var username: String
+
+    @Field(key: "first_name")
+    var firstName: String?
+
+    @Field(key: "last_name")
+    var lastName: String?
     
     @Field(key: "age")
     var age: Int?
@@ -27,13 +33,24 @@ final class TalkCoffeeUser: Model, Content {
      
     init() { }
 
-    init(id: UUID? = nil, email: String, username: String, age: Int?, birthDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID? = nil, email: String, username: String, firstName: String?, lastName: String?, age: Int?, birthDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.email = email
         self.username = username
+        self.firstName = firstName
+        self.lastName = lastName
         self.age = age
         self.birthDate = birthDate
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
 }
+
+    extension TalkCoffeeUser: Validatable {
+        static func validations(_ validations: inout Validations) {
+            // CHECK MATH HERE
+            // vapor email validation doesn't work; use diff validator
+            validations.add("username", as: String.self, is: !.empty && .count(3...) && .alphanumeric)
+            // validations.add("email", as: String.self, is: !.empty && .email)
+        }
+    }

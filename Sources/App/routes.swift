@@ -9,7 +9,10 @@ func routes(_ app: Application) throws {
         var id: UUID?
         var email: String
         var username: String
+        var first_name: String?
+        var last_name: String?
         var age: Int
+        var birth_date: Date?
         var created_at: Date?
         var updated_at: Date?
     }
@@ -21,7 +24,10 @@ func routes(_ app: Application) throws {
                 id: user.requireID(),
                 email: user.email,
                 username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 age: user.age,
+                birthDate: user.birthDate,
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt
                 )
@@ -44,6 +50,7 @@ func routes(_ app: Application) throws {
     
     users.post { req async throws -> TalkCoffeeUser in
         try await req.db.transaction { transaction in
+            try TalkCoffeeUser.validate(content: req)
             let user = try req.content.decode(TalkCoffeeUser.self)
             let file = FileMiddleware(publicDirectory: app.directory.publicDirectory)
             app.middleware.use(file)
@@ -59,12 +66,16 @@ func routes(_ app: Application) throws {
     struct PatchUser: Decodable {
         var email: String?
         var username: String?
+        var firstName: String?
+        var lastName: String?
 
     }
     
     // ADD USERNAME and EMAIL VERIFICATION BEFORE CHANGE
     // PATCH REQUEST TO UPDATE USER
     users.patch(":id") { req async throws -> TalkCoffeeUser in
+        try TalkCoffeeUser.validate(content: req)
+
         let patch = try req.content.decode(PatchUser.self)
         
         guard let user = try await TalkCoffeeUser.find(req.parameters.get("id"), on: req.db) else {
@@ -77,6 +88,14 @@ func routes(_ app: Application) throws {
 
         if let username = patch.username {
             user.username = username
+        }
+
+        if let firstName = patch.firstName {
+            user.firstName = firstName
+        }
+
+        if let lastName = patch.lastName {
+            user.lastName = lastName
         }
         
         try await user.save(on: req.db)
