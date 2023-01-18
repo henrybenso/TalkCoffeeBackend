@@ -1,7 +1,15 @@
 import Vapor
 import Fluent
-
+// controller register calls
 func routes(_ app: Application) throws {
+
+    let controllers: [RouteCollection] = [
+        TalkCoffeeUserController(),
+        TalkCoffeeStoreController()
+        ]
+    for controller in controllers {
+        try app.register(collection: controller)
+    }
 
     let users = app.grouped("users")
 
@@ -14,6 +22,12 @@ func routes(_ app: Application) throws {
         var age: Int
         var birth_date: Date?
         var created_at: Date?
+        var updated_at: Date?
+    }
+
+    let stores = app.grouped("stores")
+        struct Store: Content {
+        var id: UUID?
         var updated_at: Date?
     }
 

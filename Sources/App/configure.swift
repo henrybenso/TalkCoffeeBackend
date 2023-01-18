@@ -18,6 +18,7 @@ public func configure(_ app: Application) throws {
     
 
     app.migrations.add(CreateTalkCoffeeUser())
+    app.migrations.add(CreateTalkCoffeeStore())
     app.logger.logLevel = .debug
     
     try app.autoMigrate().wait()

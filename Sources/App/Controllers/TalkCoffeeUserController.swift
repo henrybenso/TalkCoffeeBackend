@@ -1,7 +1,7 @@
 import Fluent
 import Vapor
 
-struct TalkCoffeeController: RouteCollection {
+struct TalkCoffeeUserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let users = routes.grouped("users")
         users.get(use: index)
