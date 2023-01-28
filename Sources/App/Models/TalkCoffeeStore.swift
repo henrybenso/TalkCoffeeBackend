@@ -13,7 +13,7 @@ final class TalkCoffeeStore: Model, Content {
     @Field(key: "rating")
     var rating: Double
     
-    @Field(key: "hours")
+    @Field(key: "hours") // change to separate fields
     var hours: [Date]
 
     @Field(key: "service_types")

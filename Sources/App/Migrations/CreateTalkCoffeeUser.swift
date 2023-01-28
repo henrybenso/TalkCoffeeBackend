@@ -16,11 +16,7 @@ struct CreateTalkCoffeeUser: AsyncMigration {
             .field("updated_at", .datetime)
             .create()
     }
-
-    // func create(on database: Database) async throws {
-    //     try await database.schema("users")
-    //     .
-    // }
+    
     func revert(on database: Database) async throws {
         try await database.schema("users").delete()
     }
