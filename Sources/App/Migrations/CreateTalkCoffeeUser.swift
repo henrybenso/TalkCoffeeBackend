@@ -8,6 +8,7 @@ struct CreateTalkCoffeeUser: AsyncMigration {
             .unique(on: "email")
             .field("username", .string, .required)
             .unique(on: "username")
+            .field("password", .string, .required)
             .field("first_name", .string)
             .field("last_name", .string)
             .field("age", .int)
@@ -21,3 +22,4 @@ struct CreateTalkCoffeeUser: AsyncMigration {
         try await database.schema("users").delete()
     }
 }
+// pg281

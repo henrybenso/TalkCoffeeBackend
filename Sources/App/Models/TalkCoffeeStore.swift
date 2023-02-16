@@ -19,10 +19,10 @@ final class TalkCoffeeStore: Model, Content {
     @Field(key: "service_types")
     var serviceTypes: [String]
 
-    @Field(key: "phone_number")
+    @OptionalField(key: "phone_number")
     var phoneNumber: String?
 
-    @Field(key: "instagram")
+    @OptionalField(key: "instagram")
     var instagram: String?
     
     @Timestamp(key: "created_at", on: .create)
@@ -45,3 +45,5 @@ final class TalkCoffeeStore: Model, Content {
         self.updatedAt = updatedAt
     }
 }
+
+// extension TalkCoffeeStore: Content { }

@@ -13,16 +13,19 @@ final class TalkCoffeeUser: Model, Content {
     @Field(key: "username")
     var username: String
 
-    @Field(key: "first_name")
+    @Field(key: "password")
+    var password: String
+
+    @OptionalField(key: "first_name")
     var firstName: String?
 
-    @Field(key: "last_name")
+    @OptionalField(key: "last_name")
     var lastName: String?
     
     @Field(key: "age")
     var age: Int?
 
-    @Field(key: "birth_date")
+    @OptionalField(key: "birth_date")
     var birthDate: Date?
     
     @Timestamp(key: "created_at", on: .create)
@@ -33,10 +36,11 @@ final class TalkCoffeeUser: Model, Content {
      
     init() { }
 
-    init(id: UUID? = nil, email: String, username: String, firstName: String?, lastName: String?, age: Int?, birthDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID? = nil, email: String, username: String, password: String, firstName: String?, lastName: String?, age: Int?, birthDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.email = email
         self.username = username
+        self.password = password
         self.firstName = firstName
         self.lastName = lastName
         self.age = age
@@ -46,11 +50,12 @@ final class TalkCoffeeUser: Model, Content {
     }
 }
 
-    extension TalkCoffeeUser: Validatable {
-        static func validations(_ validations: inout Validations) {
-            // CHECK MATH HERE
-            // vapor email validation doesn't work; use diff validator
-            validations.add("username", as: String.self, is: !.empty && .count(3...) && .alphanumeric)
-            // validations.add("email", as: String.self, is: !.empty && .email)
-        }
-    }
+// extension TalkCoffeeUser: Validatable {
+//     static func validations(_ validations: inout Validations) {
+//         // CHECK MATH HERE
+//         // vapor email validation doesn't work; use diff validator
+//         // validations.add("username", as: String.self, is: !.empty && .count(3...) && .alphanumeric)
+//         validations.add("username", as: String.self, is: \.username)
+//         // validations.add("email", as: String.self, is: !.empty && .email)
+//     }
+// }
