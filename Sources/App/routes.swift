@@ -5,7 +5,8 @@ func routes(_ app: Application) throws {
 
     let controllers: [RouteCollection] = [
         TalkCoffeeUserController(),
-        TalkCoffeeStoreController()
+        TalkCoffeeStoreController(),
+        TalkCoffeeStorePrivateController()
         ]
     for controller in controllers {
         try app.register(collection: controller)

@@ -1,9 +1,10 @@
 import Fluent
 import Vapor
 
-struct TalkCoffeeStoreController: RouteCollection {
+// auth required api
+struct TalkCoffeeStorePrivateController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let routeStore = routes.grouped("api", "v1", "stores")
+        let routeStore = routes.grouped("api", "v2", "stores")
         routeStore.get(use: list)
         // routeStore.post(use: create)
         // routeStore.group(":id") { item in
