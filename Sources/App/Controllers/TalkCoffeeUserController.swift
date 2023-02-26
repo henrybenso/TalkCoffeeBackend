@@ -3,7 +3,7 @@ import Vapor
 
 struct TalkCoffeeUserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let routeUser = routes.grouped("api", "v1", "users")
+        let routeUser = routes.grouped("api", "v1", "secure", "users")
         routeUser.get(use: list)
         routeUser.post(use: create)
         routeUser.group(":id") { item in

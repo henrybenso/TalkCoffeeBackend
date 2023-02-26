@@ -15,10 +15,6 @@ struct CreateTalkCoffeeStore: AsyncMigration {
             .create()
     }
 
-    // func create(on database: Database) async throws {
-    //     try await database.schema("users")
-    //     .
-    // }
     func revert(on database: Database) async throws {
         try await database.schema("stores").delete()
     }
