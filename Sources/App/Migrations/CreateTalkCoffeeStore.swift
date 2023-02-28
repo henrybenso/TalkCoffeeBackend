@@ -6,8 +6,8 @@ struct CreateTalkCoffeeStore: AsyncMigration {
             .id()
             .field("name", .string)
             .field("rating", .double)
-            .field("hours", .array(of: .date))
-            .field("service_types", .array(of: .string))
+            .field("hours", .array(of: .date)) // use group
+            .field("service_types", .array(of: .string)) // use group here
             .field("phone_number", .string)
             .field("instagram", .string)
             .field("created_at", .datetime)

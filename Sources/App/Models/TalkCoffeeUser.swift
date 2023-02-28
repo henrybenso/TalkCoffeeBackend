@@ -13,8 +13,8 @@ final class TalkCoffeeUser: Model, Content {
     @Field(key: "username")
     var username: String
 
-    @Field(key: "password")
-    var password: String
+    @Field(key: "hashed_password")
+    var hashedPassword: String
 
     @OptionalField(key: "first_name")
     var firstName: String?
@@ -22,7 +22,7 @@ final class TalkCoffeeUser: Model, Content {
     @OptionalField(key: "last_name")
     var lastName: String?
     
-    @Field(key: "age")
+    @OptionalField(key: "age")
     var age: Int?
 
     @OptionalField(key: "birth_date")
@@ -36,11 +36,11 @@ final class TalkCoffeeUser: Model, Content {
      
     init() { }
 
-    init(id: UUID? = nil, email: String, username: String, password: String, firstName: String?, lastName: String?, age: Int?, birthDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID? = nil, email: String, username: String, hashedPassword: String, firstName: String? = nil, lastName: String? = nil, age: Int? = nil, birthDate: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.email = email
         self.username = username
-        self.password = password
+        self.hashedPassword = hashedPassword
         self.firstName = firstName
         self.lastName = lastName
         self.age = age

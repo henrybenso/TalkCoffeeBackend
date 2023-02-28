@@ -20,7 +20,7 @@ struct TalkCoffeeUserController: RouteCollection {
                     id: user.requireID(),
                     email: user.email,
                     username: user.username,
-                    password: user.password,
+                    hashedPassword: user.hashedPassword,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     age: user.age,
@@ -43,25 +43,13 @@ struct TalkCoffeeUserController: RouteCollection {
         return try await user.all()
     }
 
-
-
-
     func create(_ req: Request) async throws -> TalkCoffeeUser {
-        try await req.db.transaction { transaction in
-                // try TalkCoffeeUser.validate(content: req)
-
-                let user = try req.content.decode(TalkCoffeeUser.self)
-                // let file = FileMiddleware(publicDirectory: app.directory.publicDirectory)
-                // app.middleware.use(file)
-                // // Writes buffer to file.
-                // try await req.fileio.writeFile(ByteBuffer(string: "writing image buffer"), at: "file")
-                user.password = try Bcrypt.hash(user.password)
-                //let digest = try Bcrypt.hash("test")
-                try await user.create(on: transaction)
-
-                print("user post success")
-                return user
-            }
+        let user = try req.content.decode(TalkCoffeeUser.self)
+        user.hashedPassword = try Bcrypt.hash(user.hashedPassword)
+        //let digest = try Bcrypt.hash("test")
+        try await user.save(on: req.db)
+        print("user post success")
+        return user
     }
     
     struct PatchUser: Decodable {

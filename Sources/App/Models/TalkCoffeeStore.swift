@@ -33,7 +33,7 @@ final class TalkCoffeeStore: Model, Content {
      
     init() { }
 
-    init(id: UUID? = nil, name: String, rating: Double, hours: [Date], serviceTypes: [String], phoneNumber: String?, instagram: String?, createdAt: Date?, updatedAt: Date?) {
+    init(id: UUID? = nil, name: String, rating: Double, hours: [Date], serviceTypes: [String], phoneNumber: String? = nil, instagram: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.name = name
         self.rating = rating

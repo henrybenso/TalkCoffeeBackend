@@ -3,7 +3,7 @@ import Vapor
 
 struct TalkCoffeeStoreController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let routeStore = routes.grouped("api", "v1", "public", "stores")
+        let routeStore = routes.grouped("api", "v1", "stores")
         routeStore.get(use: list)
         routeStore.group(":term") { item in
             item.get(use: search)
