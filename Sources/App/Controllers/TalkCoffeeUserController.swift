@@ -43,11 +43,23 @@ struct TalkCoffeeUserController: RouteCollection {
         return try await user.all()
     }
 
+    // struct User: Decodable {
+    //     var email: String
+    //     var username: String
+    //     var hashedPassword: String
+    //     var firstName: String?
+    //     var lastName: String?
+    //     var age: Int?
+    //     var birthDate: Date?
+    //     var createdAt: Date?
+    //     var updatedAt: Date?
+    // }
+
     func create(_ req: Request) async throws -> TalkCoffeeUser {
         let user = try req.content.decode(TalkCoffeeUser.self)
         user.hashedPassword = try Bcrypt.hash(user.hashedPassword)
         //let digest = try Bcrypt.hash("test")
-        try await user.save(on: req.db)
+        try await user.create(on: req.db)
         print("user post success")
         return user
     }

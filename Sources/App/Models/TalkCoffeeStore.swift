@@ -1,6 +1,10 @@
 import Fluent
 import Vapor
 
+enum Store: String, Codable {
+    case cafe, bar
+}
+
 final class TalkCoffeeStore: Model, Content {
     static let schema = "stores"
 
@@ -13,11 +17,32 @@ final class TalkCoffeeStore: Model, Content {
     @Field(key: "rating")
     var rating: Double
     
-    @Field(key: "hours") // change to separate fields
-    var hours: [Date]
+    @Group(key: "sunday_hours")
+    var sundayHours: Time
+    
+    @Group(key: "monday_hours")
+    var mondayHours: Time
 
-    @Field(key: "service_types")
-    var serviceTypes: [String]
+    @Group(key: "tuesday_hours")
+    var tuesdayHours: Time
+
+    @Group(key: "wednesday_hours")
+    var wednesdayHours: Time
+
+    @Group(key: "thursday_hours")
+    var thursdayHours: Time
+
+    @Group(key: "friday_hours")
+    var fridayHours: Time
+
+    @Group(key: "saturday_hours")
+    var saturdayHours: Time
+
+    @Field(key: "store_type")
+    var storeType: Store
+
+    @Group(key: "service_types")
+    var serviceTypes: ServiceTypes
 
     @OptionalField(key: "phone_number")
     var phoneNumber: String?
@@ -33,7 +58,7 @@ final class TalkCoffeeStore: Model, Content {
      
     init() { }
 
-    init(id: UUID? = nil, name: String, rating: Double, hours: [Date], serviceTypes: [String], phoneNumber: String? = nil, instagram: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID? = nil, name: String, rating: Double, sundayHours: Time, mondayHours: Time? = nil, tuesdayHours: Time? = nil, wednesdayHours: Time? = nil, thursdayHours: Time? = nil, fridayHours: Time? = nil, saturdayHours: Time? = nil, storeTypes: String, serviceTypes: ServiceTypes, phoneNumber: String? = nil, instagram: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.name = name
         self.rating = rating
@@ -46,4 +71,26 @@ final class TalkCoffeeStore: Model, Content {
     }
 }
 
-// extension TalkCoffeeStore: Content { }
+final class Time: Fields {
+    @OptionalField(key: "open")
+    var open: Date?
+
+    @OptionalField(key: "close")
+    var close: Date?
+
+    int() { }
+}
+
+final class ServiceTypes: Fields {
+
+    @Field(key: "sit_in")
+    var sitIn: Bool
+
+    @Field(key: "take_out")
+    var takeOut: Bool
+
+    @Field(key: "delivery")
+    var delivery: Bool
+
+    init() { }
+}
