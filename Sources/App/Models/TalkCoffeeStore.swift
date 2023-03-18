@@ -58,11 +58,17 @@ final class TalkCoffeeStore: Model, Content {
      
     init() { }
 
-    init(id: UUID? = nil, name: String, rating: Double, sundayHours: Time, mondayHours: Time? = nil, tuesdayHours: Time? = nil, wednesdayHours: Time? = nil, thursdayHours: Time? = nil, fridayHours: Time? = nil, saturdayHours: Time? = nil, storeTypes: String, serviceTypes: ServiceTypes, phoneNumber: String? = nil, instagram: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID? = nil, name: String, rating: Double, sundayHours: Time, mondayHours: Time, tuesdayHours: Time, wednesdayHours: Time, thursdayHours: Time, fridayHours: Time, saturdayHours: Time, storeType: Store, serviceTypes: ServiceTypes, phoneNumber: String? = nil, instagram: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.name = name
         self.rating = rating
-        self.hours = hours
+        self.sundayHours = sundayHours
+        self.mondayHours = mondayHours
+        self.tuesdayHours = tuesdayHours
+        self.wednesdayHours = wednesdayHours
+        self.fridayHours = fridayHours
+        self.saturdayHours = saturdayHours
+        self.storeType = storeType
         self.serviceTypes = serviceTypes
         self.phoneNumber = phoneNumber
         self.instagram = instagram
@@ -78,7 +84,7 @@ final class Time: Fields {
     @OptionalField(key: "close")
     var close: Date?
 
-    int() { }
+    init() { }
 }
 
 final class ServiceTypes: Fields {

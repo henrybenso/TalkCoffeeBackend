@@ -7,7 +7,7 @@ struct TalkCoffeeStorePrivateController: RouteCollection {
         routeStore.post(use: create)
         routeStore.group(":id") { item in
             item.get(use: index)
-            item.patch(use: update)
+            // item.patch(use: update)
             item.delete(use: delete)
         }
     }
@@ -39,44 +39,44 @@ struct TalkCoffeeStorePrivateController: RouteCollection {
         }
     }
 
-    struct PatchStore: Decodable {
-        var email: String?
-        // check this notation
-        var hours: [Date]?
-        var serviceTypes: [String]?
-        var phoneNumber: String?
-        var instagram: String?
-    }
+    // struct PatchStore: Decodable {
+    //     var email: String?
+    //     // check this notation
+    //     var hours: [Date]?
+    //     var serviceTypes: [String]?
+    //     var phoneNumber: String?
+    //     var instagram: String?
+    // }
 
-    func update(_ req: Request) async throws -> TalkCoffeeStore {
-        //no validations in model
-        //try TalkCoffeeStore.validate(content: req)
+    // func update(_ req: Request) async throws -> TalkCoffeeStore {
+    //     //no validations in model
+    //     //try TalkCoffeeStore.validate(content: req)
 
-        let patch = try req.content.decode(PatchStore.self)
-        guard let store: TalkCoffeeStore = try await TalkCoffeeStore.find(req.parameters.get("id"), on: req.db) else {
-            throw Abort(.notFound)
-        }
+    //     let patch = try req.content.decode(PatchStore.self)
+    //     guard let store: TalkCoffeeStore = try await TalkCoffeeStore.find(req.parameters.get("id"), on: req.db) else {
+    //         throw Abort(.notFound)
+    //     }
             
-        if let hours = patch.hours {
-            store.hours = hours
-        }
+    //     if let hours = patch.hours {
+    //         store.hours = hours
+    //     }
         
-        if let serviceTypes = patch.serviceTypes {
-            store.serviceTypes = serviceTypes
-        }
+    //     if let serviceTypes = patch.serviceTypes {
+    //         store.serviceTypes = serviceTypes
+    //     }
 
-        if let phoneNumber = patch.phoneNumber {
-            store.phoneNumber = phoneNumber
-        }
+    //     if let phoneNumber = patch.phoneNumber {
+    //         store.phoneNumber = phoneNumber
+    //     }
 
-        if let instagram = patch.instagram {
-            store.instagram = instagram
-        }
+    //     if let instagram = patch.instagram {
+    //         store.instagram = instagram
+    //     }
             
-        try await store.save(on: req.db)
-        return store
+    //     try await store.save(on: req.db)
+    //     return store
 
-    }
+    // }
 
     func delete(req: Request) async throws -> HTTPStatus {
         guard let store: TalkCoffeeStore = try await TalkCoffeeStore.find(req.parameters.get("id"), on: req.db) else {
